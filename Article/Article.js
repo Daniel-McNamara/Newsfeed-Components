@@ -85,9 +85,25 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
-  }
-];
+  },
+  {
+    title: 'This is my component.',
+    date: 'Sept. 10, 1775',
+    firstParagraph: `Rope's end crow's nest cackle fruit jolly boat Shiver me timbers Brethren of the Coast
+     Privateer killick spike scallywag. Line hail-shot hang the jib marooned Barbary Coast
+     Arr swab mizzen tackle square-rigged. Aft holystone Brethren of the Coast capstan 
+     nipperkin hulk hempen halter blow the man down lugsail sloop.`,
 
+    secondParagraph: `Lad fathom scuttle gally bring a spring upon her cable spanker yard Sail ho ballast Corsair. 
+    Piracy blow the man down prow Davy Jones' Locker pink cackle fruit bilged on her anchor Admiral of the Black doubloon swing the lead. 
+    Nipper Gold Road brig bounty belaying pin Buccaneer Pieces of Eight ahoy Corsair scuttle..`,
+
+    thirdParagraph: `Interloper gangway wench hogshead bilge draft hands ho mutiny handsomely. 
+    American Main tackle gangway line coxswain sutler boom long clothes quarterdeck snow. 
+    Bucko spanker interloper grog blossom wherry port matey Shiver me timbers lateen sail mizzen..`
+  },
+];
+ 
 /* Step 1: Create a function that creates a component. You will want your component to look like the template below: 
   
   <div class="article">
@@ -99,9 +115,54 @@ const data = [
     <span class='expandButton'></span>
   </div>
 
-  Hint: You will need to use createElement more than once here!
+  Hint: You will need to use createElement more than once here! */
+  
+  function createArticle(object) {
+    const article = document.createElement('div');
+    const articleTitle = document.createElement('h2');
+    const articleDate = document.createElement('p');
+    const paraOne = document.createElement('p');
+    const paraTwo = document.createElement('p');
+    const paraThree = document.createElement('p');
+    const expandButton = document.createElement('span');
 
-  Your function should take either an object as it's one argument, or 5 separate arguments mapping to each piece of the data object above.
+    article.classList.add('article');
+    articleDate.classList.add('date');
+    expandButton.classList.add('expandButton');
+
+    article.append(articleTitle);
+    article.append(articleDate);
+    article.append(paraOne);
+    article.append(paraTwo);
+    article.append(paraThree);
+    article.append(expandButton);
+
+    articleTitle.textContent = object.title;
+    articleDate.textContent = object.date;
+    paraOne.textContent = object.firstParagraph;
+    paraTwo.textContent = object.secondParagraph;
+    paraThree.textContent = object.thirdParagraph;
+    expandButton.textContent = "expand";
+
+    expandButton.addEventListener('click', (event) => {
+      article.classList.toggle('article-open');
+      expandButton.textContent = 'expand';
+
+      if (article.classList.contains('article-open')) {
+        expandButton.textContent = 'collapse';
+      }
+    });
+
+    return article;
+  }
+
+  const articleSection = document.querySelector('.articles');
+
+  data.map(item => {
+    articleSection.append(createArticle(item));
+  });
+
+  /* Your function should take either an object as it's one argument, or 5 separate arguments mapping to each piece of the data object above.
 
   Step 2: Add an event listener to the expandButton span. This event listener should toggle the class 'article-open' on the 'article' div.
 
